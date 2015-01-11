@@ -1,0 +1,804 @@
+﻿<html>
+<head>
+    <title>Crossword Puzzle</title>
+    <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.crossword.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css" />
+    <style type="text/css">
+        #puzzleContainer {
+            width: 95%;
+            height: 95%;
+            margin: auto;
+            float: left;
+        }
+
+        #acrossContainer, #downContainer {
+            border: 4px solid black;
+            width: 100%;
+            height: 45%;
+            margin: 0% 2% 2% 2%;
+            float: left;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #wrapper {
+            width: 950px;
+            margin: 0% 10%;
+            position: absolute;
+        }
+
+        #header {
+            width: 90%;
+            margin: 5%;
+            height: 80px;
+            font-size: 32pt;
+        }
+
+        #left {
+            margin-left: 5%;
+            height: 465px;
+            width: 465px;
+            position: absolute;
+            float: left;
+        }
+
+        #right {
+            margin-top: 3%;
+            margin-right: 5%;
+            height: 450px;
+            width: 380px;
+            position: relative;
+            float: right;
+        }
+
+        .button {
+            float: right;
+            width: 80px;
+            margin: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        //utils
+
+        function shuffle(array) {
+            var currentIndex = array.length,
+                temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
+        function js_abort() {
+            throw new Error("Something went badly wrong!");
+        }
+
+        function printcordlist(coordlist) {
+            for (var i = 0; i < coordlist.length; i++) {
+                console.log("coordlist " + i)
+                for (var j = 0; j < coordlist[i].length; j++) {
+                    console.log(coordlist[i][j]);
+                };
+            };
+            console.log("DONE");
+        }
+
+        // class Word
+        var Word = function (w, c) {
+            this.word = w.toLowerCase();
+            this.clue = c;
+            this.length = this.word.length;
+            //# the below are set when placed on board
+            this.row = 0;
+            this.col = 0;
+            this.vertical = 0;
+            this.number = 0;
+        };
+
+        Word.prototype.down_across = function () { //# return down or across
+            if (this.vertical) {
+                return 'down';
+            } else {
+                return 'across';
+            }
+        };
+
+
+
+
+        // Crossword Class
+        var Crossword = function (cols, rows, empty, maxloops, available_words) {
+            this.cols = cols;
+            this.rows = rows;
+            this.empty = empty;
+            this.maxloops = maxloops;
+            this.available_words = available_words;
+            this.randomize_word_list();
+            this.current_word_list = [];
+            this.debug = 0;
+            this.grid = [];
+        };
+
+        Crossword.prototype.clear_grid = function () {
+            this.grid = [];
+            for (var i = 0; i < this.rows; i++) {
+                var ea_row = [];
+                for (var j = 0; j < this.cols; j++) {
+                    ea_row.push(this.empty);
+                }
+                this.grid.push(ea_row);
+            }
+        };
+
+        Crossword.prototype.randomize_word_list = function () { //also resets words and sorts by length
+            var temp_list = [];
+            ////console.log(this.available_words);
+            //exit();
+            for (var i = 0; i < this.available_words.length; i++) {
+                var w = new Word(this.available_words[i].word, this.available_words[i].clue);
+                temp_list.push(w);
+            };
+            ////console.log(temp_list);
+            temp_list = shuffle(temp_list);
+            temp_list.sort(function (a, b) {
+                return (b.length - a.length);
+            });
+            this.available_words = temp_list;
+        };
+
+
+        Crossword.prototype.compute_crossword = function (p) {
+            //console.log(p);
+            var time_permitted = 100;
+            var spins = 2;
+            var count = 0;
+            var copy = new Crossword(this.cols, this.rows, this.empty, this.maxloops, this.available_words);
+            var d = new Date();
+            var start_full = d.getTime();
+            while (((d.getTime() - start_full) < time_permitted) || (count === 0)) { // only run for x seconds
+                this.debug += 1;
+                copy.current_word_list = [];
+                copy.clear_grid();
+                copy.randomize_word_list();
+                console.log("Priniting word list")
+                console.log(copy.available_words);
+                console.log(copy.current_word_list);
+                var x = 0;
+                while (x < spins) { // spins; 2 seems to be plenty
+                    for (var i = 0; i < copy.available_words.length; i++) {
+                        var word = copy.available_words[i];
+                        if (copy.current_word_list.indexOf(word) < 0) {
+                            console.log(word.word);
+                            copy.fit_and_add(word);
+                        } else {
+                            //console.log("yahan ana chahiye " + x);
+                        }
+                    }
+                    //console.log("current_word_list of copy");
+                    //console.log(copy.current_word_list);
+                    //js_abort();
+                    x += 1;
+                }
+                //js_abort();
+
+                //print copy.solution()
+                ////console.log(copy.current_word_list.length);
+                ////console.log(this.current_word_list.length);
+                //buffer the best crossword by comparing placed words
+                if (copy.current_word_list.length > this.current_word_list.length) {
+                    //console.log("if");
+                    this.current_word_list = copy.current_word_list;
+                    this.grid = copy.grid;
+                    ////console.log(copy.grid);
+                }
+                //console.log(this.grid);
+                //console.log(this.current_word_list);
+                // js_abort();
+                d = new Date();
+                count += 1;
+                /*
+                //console.log(count);
+                //console.log(d.getTime())
+                //console.log(start_full);
+                //console.log(d.getTime() - start_full);
+                //console.log(time_permitted);
+                */
+            }
+            ////console.log(copy.solution());
+        };
+
+
+        Crossword.prototype.suggest_coord = function (word) {
+            console.log("suggest_coord");
+            //console.log(word);
+            var count = 0;
+            var coordlist = [];
+            var glc = -1;
+            //console.log("suggest_coord: grid");
+            // console.log(this.grid);
+
+            for (var i = 0; i < word.word.length; i++) {
+                var given_letter = word.word[i];
+                glc += 1;
+                var rowc = 0;
+                for (var j = 0; j < this.grid.length; j++) {
+                    var row = this.grid[j];
+                    rowc += 1;
+                    var colc = 0;
+                    for (var k = 0; k < row.length; k++) {
+                        var cell = row[k];
+                        colc += 1;
+                        if (given_letter == cell) { // check match letter in word to letters in row
+                            //try: # suggest vertical placement 
+                            if (rowc - glc > 0) { // make sure we're not suggesting a starting point off the grid
+                                if (((rowc - glc) + word.length) <= this.rows) { // make sure word doesn't go off of grid
+                                    coordlist.push([colc, rowc - glc, 1, colc + (rowc - glc), 0]);
+                                    // coordlist.push([colc, rowc - glc, 1, 0, -10]);
+                                }
+                            } else if (colc - glc > 0) { // make sure we're not suggesting a starting point off the grid
+                                if (((colc - glc) + word.length) <= this.cols) { // make sure word doesn't go off of grid
+                                    coordlist.push([colc - glc, rowc, 0, colc + (rowc - glc), 0]);
+                                    // if ((colc - glc) === 3) {
+                                    //     console.log("why why why " + given_letter + " " + cell);
+                                    // }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // example: coordlist[0] = [col, row, vertical, col + row, score]
+            // print word.word
+            // print coordlist
+
+            console.log("before sort");
+            console.log(coordlist);
+            console.log("here");
+            var new_coordlist = this.sort_coordlist(coordlist, word);
+            console.log(new_coordlist);
+            // print new_coordlist
+            return new_coordlist;
+        };
+
+
+        Crossword.prototype.sort_coordlist = function (coordlist, word) { // give each coordinate a score, then sort
+            console.log("sort_coordlist");
+            printcordlist(coordlist);
+
+            var new_coordlist = [];
+            for (var i = 0; i < coordlist.length; i++) {
+                var coord = coordlist[i];
+                var col = coord[0];
+                var row = coord[1];
+                var vertical = coord[2];
+                coord[4] = this.check_fit_score(col, row, vertical, word); // checking scores
+                console.log("coord4 is " + coord[4]);
+                if (coord[4]) { // 0 scores are filtered
+                    new_coordlist.push(coord);
+                }
+            }
+            new_coordlist = shuffle(new_coordlist); // randomize coord list; why not?
+            new_coordlist.sort(function (a, b) {
+                return (-a[4] + b[4]);
+            }); // put the best scores first
+            console.log("LATER");
+            printcordlist(new_coordlist);
+            return new_coordlist;
+        };
+
+
+
+        Crossword.prototype.fit_and_add = function (word) { // doesn't really check fit except for the first word; otherwise just adds if score is good
+            console.log("fit_and_add");
+            var fit = false;
+            var count = 0;
+            var coordlist = this.suggest_coord(word);
+            var col = 1;
+            var row = 1;
+            var vertical = 0;
+            //console.log("coordlist is ");
+            //console.log(coordlist);
+            ////console.log(word);
+            while (fit === false && count < this.maxloops) {
+
+                if (this.current_word_list.length === 0) { // this is the first word: the seed
+                    // top left seed of longest word yields best results (maybe override)
+                    vertical = Math.floor(Math.random() * 2);
+                    col = 1;
+                    row = 1;
+                    console.log(col + " " + row + " " + vertical);
+                    console.log(word);
+                    var check = this.check_fit_score(col, row, vertical, word);
+                    if (check) {
+                        fit = true;
+                        this.set_word(col, row, vertical, word, true);
+                    }
+                    console.log(check);
+                } else { // a subsquent words have scores calculated
+                    try {
+
+                        col = coordlist[count][0];
+                        row = coordlist[count][1];
+                        vertical = coordlist[count][2];
+                    } catch (e) {
+                        return;
+                    } // no more cordinates, stop trying to fit
+
+                    if (coordlist[count][4]) { // already filtered these out, but double check
+                        fit = true;
+                        this.set_word(col, row, vertical, word, true);
+                    }
+                    console.log("I came gere" + col + " " + row + " " + vertical + " " + coordlist[count][4]);
+                }
+                count += 1;
+            }
+        };
+
+        Crossword.prototype.check_fit_score = function (col, row, vertical, word) {
+            if (col < 1 || row < 1) {
+                return 0;
+            }
+            console.log("check_fit_score with vertical " + col + " " + row + " " + vertical + " " + word.word);
+            var score = 1; // give score a standard value of 1, will override with 0 if collisions detected
+            for (var i = 0; i < word.word.length; i++) {
+                var letter = word.word[i];
+                var active_cell = "";
+                if (vertical) {
+                    try {
+                        active_cell = this.get_cell(col, row + i);
+                    } catch (e) {
+                        return 0;
+                    }
+                    console.log(letter + " " + active_cell + " " + i + " " + col + " " + row);
+                    if (letter == active_cell || active_cell == this.empty) {
+                        if (letter == active_cell) {
+                            score += 1;
+                        }
+                        continue;
+                    } else {
+                        return 0;
+                    }
+
+                } else {
+                    try {
+                        active_cell = this.get_cell(col + i, row);
+                    } catch (e) {
+                        return 0;
+                    }
+                    console.log(letter + " " + active_cell + " " + i);
+                    if (letter == active_cell || active_cell == this.empty) {
+                        if (letter == active_cell) {
+                            score += 1;
+                        }
+                        continue;
+                    } else {
+                        return 0;
+                    }
+
+                }
+            }
+            return score;
+        }
+
+        Crossword.prototype.set_word = function (col, row, vertical, word, force) { // also adds word to word list
+            console.log("set_word " + vertical);
+            if (force) {
+                word.col = col;
+                word.row = row;
+                word.vertical = vertical;
+                this.current_word_list.push(word);
+                //console.log(word);
+                for (var i = 0; i < word.word.length; i++) {
+                    var letter = word.word[i];
+                    this.set_cell(col, row, letter);
+                    if (vertical) {
+                        row += 1;
+                    } else {
+                        col += 1;
+                    }
+                }
+            }
+            return;
+        };
+
+
+
+        Crossword.prototype.set_cell = function (col, row, value) {
+            this.grid[row - 1][col - 1] = value;
+        };
+
+        Crossword.prototype.get_cell = function (col, row) {
+            return this.grid[row - 1][col - 1];
+        };
+
+        Crossword.prototype.check_if_cell_clear = function (col, row) {
+            // try {
+            //     cell = this.get_cell(col, row);
+            //     if (cell == this.empty) {
+            //         return true;
+            //     }
+            // } catch (e) {
+            //     return true;
+            // }
+            // return false;
+            row -= 1;
+            col -= 1;
+            if (row >= 0 && row < this.rows && col >= 0 && col < this.cols) {
+                if (this.grid[row][col] == this.empty) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        var rows = { "row": [] };
+        Crossword.prototype.solution = function () { //# return solution grid
+            var outStr = "";
+            //console.log(this.rows);
+            //console.log(this.grid);
+            //js_abort();
+            for (var r = 0; r < this.rows; r++) {
+                var tmp_str = "";
+                for (var i = 0; i < this.grid[r].length; i++) {
+                    var c = this.grid[r][i];
+                    outStr += c + ' ';
+                    if (c === '-') tmp_str += '_';
+                    else tmp_str += c;
+                    //console.log(c);
+                    //console.log("*");
+                }
+                outStr += '\n';
+                rows["row"].push(tmp_str);
+            }
+            return outStr;
+        };
+
+        Crossword.prototype.word_find = function () { //# return solution grid
+            var outStr = "";
+            var str = "abcdefghijklmnopqrstuvwxyz";
+            for (var r = 0; r < this.rows; r++) {
+                for (var c in this.grid[r]) {
+                    if (c == this.empty) {
+                        outStr += str[Math.floor(Math.random() * 26)] + ' ';
+                    } else {
+                        outStr += c + ' ';
+                    }
+                }
+                outStr += '\n';
+            }
+            return outStr;
+        };
+
+        Crossword.prototype.order_number_words = function () { //# orders words and applies numbering system to them
+            this.current_word_list.sort(function (a, b) {
+                return (b.row + b.col) - (a.col + a.row);
+            });
+            var count = 1;
+            var icount = 1;
+            for (var i = 0; i < this.current_word_list.length; i++) {
+                var word = this.current_word_list[i];
+                word.number = count;
+                if (icount < this.current_word_list.length) {
+                    if (word.col == this.current_word_list[icount].col && word.row == this.current_word_list[icount].row) {
+                        continue;
+                    } else {
+                        count += 1;
+                    }
+                }
+                icount += 1;
+            }
+        };
+
+        Crossword.prototype.mydisplay = function () { //# return (and order/number wordlist) the grid minus the words adding the numbers
+            var outStr = "";
+            var order = true;
+            if (order) {
+                this.order_number_words();
+            }
+            var copy = this;
+            for (var i = 0; i < this.current_word_list.length; i++) {
+                var word = this.current_word_list[i]
+                copy.set_cell(word.col, word.row, word.number);
+            }
+            for (var r = 0; r < copy.rows.length; r++) {
+                for (var c in copy.grid[r]) {
+                    outStr += c + ' ';
+                }
+                outStr += '\n';
+            }
+            outStr = outStr.replace(/^[a-z]+$/i, ' ');
+            return outStr;
+        };
+
+        Crossword.prototype.word_bank = function () {
+            var outStr = '';
+            var temp_list = this.current_word_list;
+            temp_list = shuffle(temp_list); //# randomize word list
+            for (var i = 0; i < temp_list.length; i++) {
+                var word = temp_list[i];
+                outStr += word.word + ' \n';
+            }
+            return outStr;
+        };
+
+        var JSONObject = { "across": [], "down": [] };
+        Crossword.prototype.legend = function () { //# must order first
+            var outStr = '';
+            for (var i = 0; i < this.current_word_list.length; i++) {
+                var word = this.current_word_list[i];
+                if (word.down_across() === "across") {
+                    //console.log(word.number);
+                    JSONObject["across"].push({ "no": word.number, "text": word.clue });
+                }
+                else {
+                    //console.log(word.number);
+                    JSONObject["down"].push({ "no": word.number, "text": word.clue });
+                }
+            }
+            return outStr;
+        };
+
+
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(
+
+        function () {
+            //console.log("ahsshdihd");
+            console.log("here:");
+            var myMap = new Map();
+            
+            myMap.set('saffron', 'The dried, orange yellow plant used to as dye and as a cooking spice.');
+            myMap.set('pumpernickel', 'Dark, sour bread made from coarse ground rye.');
+            myMap.set('leaven', 'An agent, such as yeast, that cause batter or dough to rise..');
+            myMap.set('coda', 'Musical conclusion of a movement or composition.');
+            myMap.set('paladin', 'A heroic champion or paragon of chivalry.');
+            myMap.set('syncopation', 'Shifting the emphasis of a beat to the normally weak beat.');
+            myMap.set('albatross', 'A large bird of the ocean having a hooked beek and long, narrow wings.');
+            myMap.set('harp', 'Musical instrument with 46 or more open strings played by plucking.');
+            myMap.set('piston', 'A solid cylinder or disk that fits snugly in a larger cylinder and moves under pressure as in an engine.');
+            myMap.set('caramel', 'A smooth chery candy made from suger, butter, cream or milk with flavoring.');
+            myMap.set('coral', 'A rock-like deposit of organism skeletons that make up reefs.');
+            myMap.set('dawn', 'The time of each morning at which daylight begins.');
+            myMap.set('pitch', 'A resin derived from the sap of various pine trees.');
+            myMap.set('fjord', 'A long, narrow, deep inlet of the sea between steep slopes.');
+            myMap.set('lip', 'Either of two fleshy folds surrounding the mouth.');
+            myMap.set('lime', 'The egg-shaped citrus fruit having a green coloring and acidic juice.');
+            myMap.set('mist', 'A mass of fine water droplets in the air near or in contact with the ground.');
+            myMap.set('plague', 'A widespread affliction or calamity.');
+            myMap.set('yarn', 'A strand of twisted threads or a long elaborate narrative.');
+            myMap.set('snicker', 'A snide, slightly stifled laugh.');
+           
+            myMap.set('INCEPTION', 'A thief who steals corporate secrets through use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.');
+            myMap.set('ERAGON', 'In his homeland of Alagaesia, a farm boy happens upon a dragon\'s egg -- a discovery that leads him on a predestined journey where he realized he\'s the one person who can defend his home against an evil king.');
+            myMap.set('FIELDHOCKEY', 'A game played on turf in which two opposing teams of players, using curved sticks, try to drive a ball into the opponents goal.');
+          /*  myMap.set('FOOTBALL', 'A game played by two teams of 11 players each on a rectangular, 100-yard-long field with goal lines and goal posts at either end, the object being to gain possession of the ball and advance it in running or passing plays across the opponent\'s goal line or kick it through the air');
+            myMap.set('BASKETBALL', 'A game played between two teams of five players each, the object being to throw a ball');
+            myMap.set('BOBSLEIGH', 'A winter sport in which teams make timed runs down narrow, twisting, banked purpose-built iced tracks in a gravity-powered sled.');
+            myMap.set('DODGEBALL', 'A team sport whose main objective is to dodge or catch balls thrown by the opposition.');
+            myMap.set('HEPTATHLON', 'An athletic contest usually limited to women in which each contestant participates in the following seven track and field events');
+            */ myMap.set('adam', '_____________ and eve');
+            myMap.set('hiroshima', '_____________ and nagasaki');
+            myMap.set('jekyll', '______________ and hyde');
+            myMap.set('romulus', '______________ and remus');
+            type_list = [];
+            myMap.forEach(function (key, value) {
+                //console.log(key, value);
+                type_list.push(new Word(value, key));
+            });
+
+
+            
+
+            
+            a = new Crossword(13, 13, '-', 10000, type_list);
+            console.log(a);
+            console.log("Logging grid");
+            for (var i = 0; i < a.grid.length; i++) {
+                for (var j = 0; j < a.grid[i].length; j++) {
+                    console.log(a.grid[i][j]);
+                }
+            }
+            
+            do{
+                a.compute_crossword(2);
+            }
+            while(a.current_word_list.length < 5)
+            
+            
+            a.order_number_words();
+            a.legend();
+            
+            console.log(a.word_bank());
+            console.log(a.solution());
+            console.log(JSON.stringify(JSONObject));
+            console.log(JSON.stringify(rows));
+            /*
+            var samplePuzzle = {
+                "row": [
+
+                "STUMP_TERM_LIMA",
+                "TEPID_OLEO_ORAL",
+                "INSTALLSFORTIME",
+                "LUTZ_ITE__ESSEX",
+                "TRAINEE_TYP0___",
+                "SEN_INCOMEOFAGE",
+                "__DOTS_PAN_FUEL",
+                "PRIUS_ZEN_LUTES",
+                "HUNT_EEL_LENO__",
+                "INGOTBUSTED_MAS",
+                "___FIBS_ADAMANT",
+                "SKATE__JIG_OTTO",
+                "INJURYSELECTION",
+                "FEAR_DODO_ATONE",
+                "TERN_STIR_TONYS"
+                ]
+            };
+            */
+             var samplePuzzle = rows;
+
+             var sampleClues = JSONObject;
+            console.log(sampleClues);
+            console.log(samplePuzzle);
+
+            /*
+            var sampleClues = {
+                "across": [
+                    { no: "1", text: "Baffle" },
+                    { no: "6", text: "Section of a school year" },
+                    { no: "10", text: "Latin American capital" },
+                    { no: "14", text: "Not hot or cold" },
+                    { no: "15", text: "Lard alternative" },
+                    { no: "16", text: "Like some history" },
+                    { no: "17", text: "Does some renovating at a magazine headquarters?" },
+                    { no: "20", text: "Olympian's jump on the ice" },
+                    { no: "21", text: "Suffix for graph or magnet" },
+                    { no: "22", text: "Earl of __ ( Thomas Cromwell )" },
+                    { no: "23", text: "Apprentice" },
+                    { no: "25", text: "Manuscript slip-up" },
+                    { no: "27", text: "U.S. treaty ratifier" },
+                    { no: "28", text: "Social Security?" },
+                    { no: "33", text: "Kids connect them" },
+                    { no: "35", text: "Critique harshly" },
+                    { no: "36", text: "Propellant" },
+                    { no: "37", text: "Pioneering Toyota" },
+                    { no: "39", text: "Meditative discipline" },
+                    { no: "40", text: "Medieval stringed instruments" },
+                    { no: "41", text: "Search high and low" },
+                    { no: "42", text: "Moray, for one" },
+                    { no: "43", text: "Late night jokester" },
+                    { no: "44", text: "Headline about a mishap at Fort Knox?" },
+                    { no: "47", text: "Advanced Degs." },
+                    { no: "50", text: "Tall tales" },
+                    { no: "51", text: "Unshakable" },
+                    { no: "53", text: "Roll around a rink" },
+                    { no: "56", text: "Lively Dance" },
+                    { no: "57", text: "Film director Preminger" },
+                    { no: "58", text: "Component of a con artists insurance scam?" },
+                    { no: "62", text: "Trepidation" },
+                    { no: "63", text: "Lamebrain" },
+                    { no: "64", text: "Make amends" },
+                    { no: "65", text: "Bird on a beach" },
+                    { no: "66", text: "Cookbook instruction" }
+                ],
+                "down": [
+                    { no: "1", text: "Clown's walking poles" },
+                    { no: "2", text: "Many a faculty member's goal" },
+                    { no: "3", text: "Honorable" },
+                    { no: "4", text: "Gaynor from 'South Pacific'" },
+                    { no: "5", text: "Mobile electronic gadget" },
+                    { no: "6", text: "Ancient Mexican" },
+                    { no: "7", text: "Or ___ ( bullying words )" },
+                    { no: "8", text: "TD caller" },
+                    { no: "9", text: "Guernsey's greeting" },
+                    { no: "10", text: "A blast" },
+                    { no: "11", text: "Fleur-de-lis flower" },
+                    { no: "12", text: "Patrick's auntie" },
+                    { no: "13", text: "Yankee slugger Rodriguez" },
+                    { no: "18", text: "Property claims by creditors" },
+                    { no: "19", text: "Foreclosed property, briefly" },
+                    { no: "24", text: "Causes of some head scratching" },
+                    { no: "25", text: "Certain U.S. agent" },
+                    { no: "26", text: "Yearning" },
+                    { no: "29", text: "European cars with a lightning bolt logo" },
+                    { no: "30", text: "Takeover of human activity by machines" },
+                    { no: "31", text: "'My Goodness!'" },
+                    { no: "32", text: "Some rapid transits" },
+                    { no: "34", text: "At an improper time" },
+                    { no: "37", text: "__ Beta Kappa" },
+                    { no: "38", text: "Take off" },
+                    { no: "39", text: "Mt Olympus ruler" },
+                    { no: "40", text: "'___ and the Swan' ( Yeats )" },
+                    { no: "42", text: "Die down" },
+                    { no: "43", text: "Mountaineer's resting place" },
+                    { no: "45", text: "Stratum" },
+                    { no: "46", text: "Person with a fitting career?" },
+                    { no: "48", text: "Roman general in a Shakespeare title" },
+                    { no: "49", text: "Jewelry gems" },
+                    { no: "52", text: "'Be prepared', e.g." },
+                    { no: "53", text: "Make fine, in a way" },
+                    { no: "54", text: "Where the femur and the tibia meet" },
+                    { no: "55", text: "Clearly not locked" },
+                    { no: "56", text: "'Star Wars' elite" },
+                    { no: "59", text: "Upholsterer's meas." },
+                    { no: "60", text: "Lush" },
+                    { no: "61", text: "Alley frequenter" }
+                ]
+            };
+
+            */
+
+            $(this).crossword(
+             {
+                 'puzzle': samplePuzzle, //JSON puzzle structure
+                 'clues': sampleClues, //JSON clue structure
+                 'title': "Crossword", //A title for the puzzle
+                 'puzzleContainer': "#puzzleContainer", // id of puzzle display DIV
+                 'acrossContainer': "#acrossContainer", // id of across clues display DIV
+                 'downContainer': "#downContainer", // id of down clues display DIV
+                 'revealButton': "#revealButton", // id of reveal button
+                 'hideButton': "#hideButton", // id of hide button
+                 'saveButton': "#saveButton",  // id of save to cookie button
+                // 'loadButton': "#loadButton"  // id of load from cookie  button
+             });
+
+        }
+
+        );
+        function refresh() {
+            window.location.reload();
+        }
+
+    </script>
+
+</head>
+<body style="font-family : Verdana; background-color : #FFFDF0;">
+    <div id="wrapper">
+        <div id="header">
+            <span>Crossword</span>
+            <button id="revealButton" class="button">Reveal</button>
+            <button id="hideButton" class="button">Hide</button>
+            <button id="saveButton" class="button">Save</button>
+            <button onclick="refresh()" class="button">NewGame</button>
+
+            <hr />
+        </div>
+        <div id="left">
+            <div id="puzzleContainer">
+                <table id="puzzleTable" class="cwTable">
+                    <tr class="cwRow">
+                        <td class="cwCell"><div class="cwNumber">12</div>A</td>
+                        <td class="cwCell">B</td>
+                    </tr>
+                    <tr class="cwRow">
+                        <td class="cwCell">C</td>
+                        <td class="cwCell">D</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="right">
+            <div id="acrossContainer">
+                ACROSS
+            </div>
+            <div id="downContainer">
+                DOWN
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

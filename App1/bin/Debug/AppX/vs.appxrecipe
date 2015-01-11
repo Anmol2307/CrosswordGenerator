@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>BILLA</Machine>
+    <WindowsUser>wholock</WindowsUser>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>31bc131d-ed63-4c92-82a3-89e436461e76</PackageIdentityName>
+    <IntermediateOutputPath>C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\bld\Debug\</IntermediateOutputPath>
+    <RegisteredManifestChecksum>2B8345CDA23F189BC78B613C27F59A6D1BC2F4126827051A5FE8BF278D20423E</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>31bc131d-ed63-4c92-82a3-89e436461e76_1.0.0.0_neutral__nmmf9dfhsazwg</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>31bc131d-ed63-4c92-82a3-89e436461e76_nmmf9dfhsazwg!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>31bc131d-ed63-4c92-82a3-89e436461e76</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=wholock</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+    <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T22:05:02.968</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\bootstrap-theme.css">
+      <PackagePath>css\bootstrap-theme.css</PackagePath>
+      <Modified>2015-01-11T18:55:53.334</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\bootstrap-theme.min.css">
+      <PackagePath>css\bootstrap-theme.min.css</PackagePath>
+      <Modified>2015-01-11T18:55:53.382</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\bootstrap.css">
+      <PackagePath>css\bootstrap.css</PackagePath>
+      <Modified>2015-01-11T18:55:53.407</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\bootstrap.min.css">
+      <PackagePath>css\bootstrap.min.css</PackagePath>
+      <Modified>2015-01-11T18:55:53.469</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\stylesheet.css">
+      <PackagePath>css\stylesheet.css</PackagePath>
+      <Modified>2015-01-11T10:00:43.803</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\homepage.css">
+      <PackagePath>css\homepage.css</PackagePath>
+      <Modified>2015-01-11T16:13:02.365</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\default.css">
+      <PackagePath>css\default.css</PackagePath>
+      <Modified>2015-01-11T16:12:29.646</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\bootstrap-theme.css.map">
+      <PackagePath>css\bootstrap-theme.css.map</PackagePath>
+      <Modified>2015-01-11T18:55:53.357</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\css\bootstrap.css.map">
+      <PackagePath>css\bootstrap.css.map</PackagePath>
+      <Modified>2015-01-11T18:55:53.445</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\adjectives-data.csv">
+      <PackagePath>data\adjectives-data.csv</PackagePath>
+      <Modified>2015-01-11T04:19:42.644</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\adverbs-data.csv">
+      <PackagePath>data\adverbs-data.csv</PackagePath>
+      <Modified>2015-01-11T04:39:43.963</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\birds-data.csv">
+      <PackagePath>data\birds-data.csv</PackagePath>
+      <Modified>2015-01-11T04:47:32.547</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\movies-data.csv">
+      <PackagePath>data\movies-data.csv</PackagePath>
+      <Modified>2015-01-11T01:56:50.278</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\pairs.csv">
+      <PackagePath>data\pairs.csv</PackagePath>
+      <Modified>2015-01-11T03:11:26.909</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\positivewords-data.csv">
+      <PackagePath>data\positivewords-data.csv</PackagePath>
+      <Modified>2015-01-11T03:40:56.970</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\data\sports-data.csv">
+      <PackagePath>data\sports-data.csv</PackagePath>
+      <Modified>2015-01-11T04:51:57.498</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\fonts\glyphicons-halflings-regular.eot">
+      <PackagePath>fonts\glyphicons-halflings-regular.eot</PackagePath>
+      <Modified>2015-01-11T18:55:53.512</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\fonts\glyphicons-halflings-regular.svg">
+      <PackagePath>fonts\glyphicons-halflings-regular.svg</PackagePath>
+      <Modified>2015-01-11T18:55:53.542</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\fonts\glyphicons-halflings-regular.ttf">
+      <PackagePath>fonts\glyphicons-halflings-regular.ttf</PackagePath>
+      <Modified>2015-01-11T18:55:53.567</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\fonts\glyphicons-halflings-regular.woff">
+      <PackagePath>fonts\glyphicons-halflings-regular.woff</PackagePath>
+      <Modified>2015-01-11T18:55:53.593</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\game.html">
+      <PackagePath>game.html</PackagePath>
+      <Modified>2015-01-11T20:35:42.529</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\home.html">
+      <PackagePath>home.html</PackagePath>
+      <Modified>2015-01-11T19:59:21.355</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\genre.html">
+      <PackagePath>genre.html</PackagePath>
+      <Modified>2015-01-11T19:49:13.636</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\pages\genre.html">
+      <PackagePath>pages\genre.html</PackagePath>
+      <Modified>2015-01-11T19:34:24.676</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\logo.scale-100.png">
+      <PackagePath>images\logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-03T01:38:24.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\smalllogo.scale-100.png">
+      <PackagePath>images\smalllogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T15:34:31.045</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\smalllogo.scale-180.png">
+      <PackagePath>images\smalllogo.scale-180.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T15:28:39.719</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\smalllogo.scale-80.png">
+      <PackagePath>images\smalllogo.scale-80.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T15:35:05.847</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\smalllogo.targetsize-16.png">
+      <PackagePath>images\smalllogo.targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T15:35:26.193</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\splashscreen.scale-100.png">
+      <PackagePath>images\splashscreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T19:55:21.326</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\SplashScreen.scale-140.png">
+      <PackagePath>images\SplashScreen.scale-140.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T19:54:43.293</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\SplashScreen.scale-180.png">
+      <PackagePath>images\SplashScreen.scale-180.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-01-11T19:54:13.670</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\storelogo.scale-100.png">
+      <PackagePath>images\storelogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-03T01:38:24.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\images\wc.jpg">
+      <PackagePath>images\wc.jpg</PackagePath>
+      <Modified>2015-01-11T19:55:59.562</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\bootstrap.js">
+      <PackagePath>js\bootstrap.js</PackagePath>
+      <Modified>2015-01-11T18:55:53.641</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\bootstrap.min.js">
+      <PackagePath>js\bootstrap.min.js</PackagePath>
+      <Modified>2015-01-11T18:55:53.680</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\default.js">
+      <PackagePath>js\default.js</PackagePath>
+      <Modified>2015-01-11T18:02:57.527</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\jquery-1.6.1.min.js">
+      <PackagePath>js\jquery-1.6.1.min.js</PackagePath>
+      <Modified>2015-01-11T09:55:28.105</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\jquery.crossword.js">
+      <PackagePath>js\jquery.crossword.js</PackagePath>
+      <Modified>2015-01-11T09:53:26.588</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\homePage.js">
+      <PackagePath>js\homePage.js</PackagePath>
+      <Modified>2015-01-11T16:14:17.373</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\jquery.min.js">
+      <PackagePath>js\jquery.min.js</PackagePath>
+      <Modified>2015-01-11T18:58:16.400</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\navigator.js">
+      <PackagePath>js\navigator.js</PackagePath>
+      <Modified>2015-01-11T18:02:41.968</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\js\npm.js">
+      <PackagePath>js\npm.js</PackagePath>
+      <Modified>2015-01-11T18:55:53.693</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\wholock\Documents\Visual Studio 2013\Projects\App1\App1\bin\Debug\ReverseMap\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2015-01-11T22:05:02.812</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows\v8.1\ExtensionSDKs\Microsoft.WinJS.2.0\1.0\">
+      <Name>Microsoft.WinJS.2.0</Name>
+      <Version>1.0.9600.17018</Version>
+      <Architecture>Neutral</Architecture>
+      <FrameworkIdentity>Name=Microsoft.WinJS.2.0, MinVersion=1.0.9600.17018</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v8.1\ExtensionSDKs\Microsoft.WinJS.2.0\1.0\Microsoft.WinJS.2.0.appx</AppxLocation>
+      <MoreInfo>http://go.microsoft.com/fwlink/%3fLinkId=260891</MoreInfo>
+    </ResolvedSDKReference>
+  </ItemGroup>
+</Project>

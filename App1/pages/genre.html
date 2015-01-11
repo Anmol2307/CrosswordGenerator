@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="//Microsoft.WinJS.2.0/css/ui-dark.css" rel="stylesheet" />
+    <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
+    <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
+
+    <style>
+        .controlGroup {
+            margin: 0px 0px 20px 0px;
+            padding: 0px;
+            border: 0px;
+        }
+
+        .controlGroupName {
+            font: normal normal normal 11pt/15pt "Segoe UI Semilight";
+            font-size: 11pt;
+            margin: 0px 0px 10px 0px;
+            padding: 0px;
+            border: 0px;
+            position: relative;
+            vertical-align: top;
+            display: block;
+        }
+
+        .verticalStacking input[type="checkbox"] {
+            margin-bottom: 16px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        (function () {
+
+            WinJS.UI.Pages.define("/pages/genre.html", {
+                ready: function (element, options) {
+                    WinJS.Utilities.query("button").listen("click", linkClick, false);
+                }
+            });
+            function linkClick(eventInfo) {
+                eventInfo.preventDefault();
+                var data = [];
+                WinJS.Utilities.query(".checkboxExample1").forEach(function (checkbox) {
+                    if(checkbox.checked === true)
+                        data.push(checkbox.id)
+                });
+                WinJS.Navigation.navigate("/game.html").done( /* Your success and error handlers */);
+               // WinJS.Navigation.navigate("../game.html",data).done();
+            }
+
+        });
+
+    </script>
+    <title></title>
+</head>
+<body>
+    <div style="margin:auto;top:0;bottom: 0;left: 0;right: 0;position:absolute;width:200px;height:200px">
+            <fieldset class="controlGroup verticalStacking">
+                <legend class="controlGroupName">Choose Genre:</legend>
+                <label>
+                    <input id="movies" type="checkbox" class="checkboxExample1" /> Movies
+                </label>
+                <br />
+                <label>
+                    <input id="sports" type="checkbox" class="checkboxExample1" checked />Sports
+                </label>
+                <br />
+                <label>
+                    <input id="birds" type="checkbox" class="checkboxExample1" />Birds
+                </label>
+                <br />
+                <label>
+                    <input id="pwords" type="checkbox" class="checkboxExample1" />Positive Words
+                </label>
+                <br />
+                <label>
+                    <input id="rwords" type="checkbox" class="checkboxExample1" />Random Words
+                </label>
+            </fieldset>
+        
+            <button id="submitContent"> Start Game</button>
+    </div>
+</body>
+</html>
