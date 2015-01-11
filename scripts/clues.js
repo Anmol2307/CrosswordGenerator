@@ -1,0 +1,16 @@
+myMap.set('INCEPTION','A thief who steals corporate secrets through use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.');
+myMap.set('THEWEDDINGPLANNER','Mary Fiore is San Francisco\'s most successful supplier of romance and glamor. She knows all the tricks. She knows all the rules. But then she breaks the most important rule of all: she falls in love with the groom.');
+myMap.set('PLANETOFTHEAPES','An Air Force astronaut crash lands on a mysterious planet where evolved, talking apes dominate a race of primitive humans');
+myMap.set('HOWIMETYOURMOTHER','A father recounts to his children, through a series of flashbacks, the journey he and his four best friends took leading up to him meeting their mother.');
+myMap.set('ERAGON','In his homeland of Alagaesia, a farm boy happens upon a dragon\'s egg -- a discovery that leads him on a predestined journey where he realized he\'s the one person who can defend his home against an evil king.');
+myMap.set('ABEAUTIFULMIND','After a brilliant but asocial mathematician accepts secret work in cryptography, his life takes a turn for the nightmarish.');
+myMap.set('FIELDHOCKEY','A game played on turf in which two opposing teams of players, using curved sticks, try to drive a ball into the opponents goal.');
+myMap.set('FOOTBALL','A game played by two teams of 11 players each on a rectangular, 100-yard-long field with goal lines and goal posts at either end, the object being to gain possession of the ball and advance it in running or passing plays across the opponent\'s goal line or kick it through the air');
+myMap.set('BASKETBALL','A game played between two teams of five players each, the object being to throw a ball');
+myMap.set('BOBSLEIGH','A winter sport in which teams make timed runs down narrow, twisting, banked purpose-built iced tracks in a gravity-powered sled.');
+myMap.set('DODGEBALL','A team sport whose main objective is to dodge or catch balls thrown by the opposition.');
+myMap.set('HEPTATHLON','An athletic contest usually limited to women in which each contestant participates in the following seven track and field events');
+myMap.set('adam','_____________ and eve');
+myMap.set('hiroshima','_____________ and nagasaki');
+myMap.set('jekyll','______________ and hyde');
+myMap.set('romulus','______________ and remus');
